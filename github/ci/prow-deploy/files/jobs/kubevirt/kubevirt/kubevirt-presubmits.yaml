@@ -2203,7 +2203,7 @@ presubmits:
         image: quay.io/kubevirtci/bootstrap:v20260417-7427ea2
         name: ""
         resources:
-          requests:
+          requests: 
             memory: 52Gi
         securityContext:
           privileged: true
@@ -2432,6 +2432,7 @@ presubmits:
     annotations:
       fork-per-release: "true"
       testgrid-dashboards: kubevirt-presubmits
+<<<<<<< HEAD
     cluster: prow-workloads
     decorate: true
     decoration_config:
@@ -2511,3 +2512,36 @@ presubmits:
           privileged: true
       nodeSelector:
         type: bare-metal-external
+  - always_run: false
+    annotations:
+      fork-per-release: "true"
+      testgrid-dashboards: kubevirt-presubmits
+    cluster: prow-hyperv-workloads
+    decorate: true
+    decoration_config:
+      grace_period: 5m0s
+      timeout: 7h0m0s
+    labels:
+      preset-podman-in-container-enabled: "true"
+    max_concurrency: 11
+    name: pull-kubevirt-e2e-kind-1.33-sig-compute-parallel-wg-mshv-amd64
+    optional: true
+    skip_branches:
+    - release-\d+\.\d+
+    spec:
+      containers:
+      - command:
+        - /usr/local/bin/runner.sh
+        - /bin/sh
+        - -ce
+        - automation/test.sh
+        env:
+        - name: TARGET
+          value: kind-1.33-sig-compute-parallel-wg-mshv-amd64
+        image: quay.io/kubevirtci/bootstrap:v20251218-e7a7fc9
+        name: ""
+        resources:
+          requests:
+            memory: 18Gi
+        securityContext:
+          privileged: true
