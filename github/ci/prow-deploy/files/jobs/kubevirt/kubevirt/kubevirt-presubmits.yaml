@@ -2535,7 +2535,7 @@ presubmits:
         - -ce
         - |
           # Launch a container with the QEMU RPMs repo to serve the RPMs for installation
-          container_id=$(podman run -dit --rm --name qemu-rpms --network bridge -p 9090:80 $QEMU_RPMS_IMG)
+          container_id=$(podman run -dit --rm --name qemu-rpms --network host $QEMU_RPMS_IMG)
 
           # Get the IP address of the container to access the RPMs repo
           prow_container_ip=$(ip route get 1.1.1.1 | awk '{print $7; exit}')
@@ -2543,14 +2543,14 @@ presubmits:
           cat >custom-repo.yaml <<EOF
           repositories:
           - arch: x86_64
-            baseurl: http://${prow_container_ip}:9090/x86_64/
+            baseurl: http://${prow_container_ip}:80/x86_64/
             name: custom-qemu
             gpgcheck: 0
             repo_gpgcheck: 0
           EOF
 
           # Extract the exact version of QEMU (tolerate missing build-info fields)
-          QEMU_VERSION=$(curl -s "http://${prow_container_ip}:9090/build-info.json" | jq -r '.qemu_version // empty') || true
+          QEMU_VERSION=$(curl -s "http://${prow_container_ip}:80/build-info.json" | jq -r '.qemu_version // empty') || true
           echo "Detected qemu version:    ${QEMU_VERSION:-<none>}"
 
           # Configure KubeVirt to use latest Libvirt version and the custom QEMU version
