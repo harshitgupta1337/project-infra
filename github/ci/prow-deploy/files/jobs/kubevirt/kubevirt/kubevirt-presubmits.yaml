@@ -2551,7 +2551,11 @@ presubmits:
 
           # Extract the exact version of QEMU (tolerate missing build-info fields)
           QEMU_VERSION=$(curl -s "http://${prow_container_ip}:80/build-info.json" | jq -r '.qemu_version // empty') || true
-          echo "Detected qemu version:    ${QEMU_VERSION:-<none>}"
+          # Return an error if the QEMU version is not found in the build-info.json
+          if [ -z "$QEMU_VERSION" ]; then
+            echo "Error: QEMU version not found in build-info.json"
+            exit 1
+          fi
 
           # Configure KubeVirt to use latest Libvirt version and the custom QEMU version
           make CUSTOM_REPO=custom-repo.yaml LIBVIRT_VERSION="0:11.10.0-12.el9" QEMU_VERSION="$QEMU_VERSION" SINGLE_ARCH="x86_64" rpm-deps
