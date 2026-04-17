@@ -2578,6 +2578,8 @@ presubmits:
           value: kind-1.35-sig-compute-parallel-wg-mshv-amd64
         - name: QEMU_RPMS_IMG
           value: docker.io/harshitg/qemu-rpms:qemu-10.2.0-w-cpuid # TODO Change this to stable image after testing
+        - name: KUBEVIRT_FUNC_TEST_GINKGO_TIMEOUT
+          value: "8h"
         image: quay.io/kubevirtci/bootstrap:v20251218-e7a7fc9
         name: ""
         resources:
