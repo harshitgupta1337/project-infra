@@ -2570,7 +2570,7 @@ presubmits:
 
           # TODO: The following env vars are being set because MSHV does not support 
           export KUBEVIRT_LABEL_FILTER="(sig-compute && !(Serial,GPU,VGPU,sig-compute-migrations,sig-storage,storage-req) && !(SEV, SEVES, secure-execution))&&(!PERIODIC)&&(!Windows)&&(!Sysprep)&&(!requires-s390x)&&(!requires-arm64)&&(!RequiresVolumeExpansion)"
-          export KUBEVIRT_E2E_SKIP="migration|migrate|TSC|PNG|Reset|soft reboot|test_id:1648|test_id:1627|test_id:1641|test_id:1642|test_id:1655|VNC|test_id:3090|test_id:1590|test_id:11652|test_id:11653|test_id:11661|external kernel boot with external alpine-based kernel only (without initrd) ensure successful boot and deletion when VMI has a disk defined|VirtualMachinePool should handle pool with dataVolumeTemplates|VirtualMachinePool should scale in VMs based on the scale-in strategy and preserve state is set to offline"
+          export KUBEVIRT_E2E_SKIP="migration|migrate|TSC|PNG|Reset|soft reboot|restart|test_id:1588|test_id:1648|test_id:1627|test_id:1641|test_id:1642|test_id:1655|VNC|test_id:3090|test_id:1590|test_id:1591|test_id:11652|test_id:11653|test_id:11661|external kernel boot with external alpine-based kernel only \(without initrd\) ensure successful boot and deletion when VMI has a disk defined|VirtualMachinePool should handle pool with dataVolumeTemplates|VirtualMachinePool should scale in VMs based on the scale-in strategy and preserve state is set to offline"
 
           # Run end-to-end tests
           automation/test.sh
